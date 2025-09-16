@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  <title>Olympus</title>
+ 
+</head>
+<body>
+  <div class="glow-background" id="glow"></div>
+
+  <audio id="backgroundSound" autoplay loop>
+    <source src="sounds/background.mp3" type="audio/mpeg" />
+  </audio>
+
+  <audio id="clickSound">
+    <source src="copy_FA0D133C_3DB1_43E8_9260_8307AB9D7FAF_audio_extractor_net.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="container">
+    <h1>Olympus</h1>
+
+    <div class="image-box">
+      <div class="overlay-text">
+        <p>Chance: <span id="chance">--%</span></p>
+        <p>Spins: <span id="spins">--</span></p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="analyze()">Analyze</button>
+      <button onclick="goBack()">Back</button>
+    </div>
+
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    let lastAnalysis = 0;
+
+    function analyze() {
+      const now = Date.now();
+      if (now - lastAnalysis < 15000) {
+        document.getElementById("message").textContent = "⏳ Please wait 15 seconds before analyzing again.";
+        return;
+      }
+
+      lastAnalysis = now;
+      document.getElementById("message").textContent = "🔍 Analyzing...";
+
+      document.getElementById("clickSound").play();
+
+      setTimeout(() => {
+        const chance = Math.floor(Math.random() * (80 - 65 + 1)) + 65;
+        const spins = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+
+        document.getElementById("chance").textContent = `${chance}%`;
+        document.getElementById("spins").textContent = spins;
+        document.getElementById("message").textContent = "✅ Analysis complete!";
+      }, 3000);
+    }
+
+    function goBack() {
+      window.location.href = "https://vadim1700.github.io/Testing-/";
+    }
+
+    function createGlow() {
+      const glow = document.getElementById("glow");
+      for (let i = 0; i < 150; i++) {
+        const dot = document.createElement("div");
+        dot.className = "glow-dot";
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.animationDelay = `${Math.random() * 3}s`;
+        glow.appendChild(dot);
+      }
+    }
+
+    createGlow();
+  </script>
+</body>
+</html>

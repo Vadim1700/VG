@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Игровой портал</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Звездный фон -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Языковые иконки -->
+  <div class="language-selection">
+    <div class="language-option" onclick="changeLanguage('ru')">
+      <img src="languages/ru.png" alt="Русский" />
+    </div>
+    <div class="language-option" onclick="changeLanguage('en')">
+      <img src="languages/en.png" alt="English" />
+    </div>
+    <div class="language-option" onclick="changeLanguage('hi')">
+      <img src="languages/in.png" alt="हिंदी" />
+    </div>
+    <div class="language-option" onclick="changeLanguage('br')">
+      <img src="languages/br.png" alt="Português (BR)" />
+    </div>
+    <div class="language-option" onclick="changeLanguage('es')">
+      <img src="languages/Mexico.png" alt="Español" />
+    </div>
+  </div>
+
+  <!-- Поиск -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Поиск игры..." oninput="filterGames()" />
+  </div>
+
+  <!-- Игры -->
+  <div class="games-container" id="gamesContainer">
+    <div class="game-card" data-title="Gates Of Olympus">
+      <img src="Games/gates-of-olympus.jpg" alt="Gates Of Olympus" />
+      <h3 class="game-title">Gates Of Olympus</h3>
+      <a href="Olympus/index.html" class="play-button">Играть</a>
+    </div>
+    <div class="game-card" data-title="Gates Of Olympus 1000">
+      <img src="Games/gates-of-olympus-1000.jpg" alt="Gates Of Olympus 1000" />
+      <h3 class="game-title">Gates Of Olympus 1000</h3>
+      <a href="Olympus-1000/index.html" class="play-button">Играть</a>
+    </div>
+        <div class="game-card" data-title="Sugar Rush 1000">
+      <img src="Games/sugar-rush-1000.jpg" alt="Sugar Rush 1000" />
+      <h3 class="game-title">Sugar Rush 1000</h3>
+      <a href="Sugar-1000/index.html" class="play-button">Играть</a>
+    </div>
+            <div class="game-card" data-title="Ze Zeuz">
+      <img src="Games/Ze-zeuz.jpg" alt="Ze Zeuz" />
+      <h3 class="game-title">Ze Zeuz</h3>
+      <a href="games/gates2.html" class="play-button">Играть</a>
+    </div>
+  </div>
+
+<script>
+  const translations = {
+    ru: {
+      play: "Играть",
+      searchPlaceholder: "Поиск игры..."
+    },
+    en: {
+      play: "Play",
+      searchPlaceholder: "Search game..."
+    },
+    hi: {
+      play: "खेलें",
+      searchPlaceholder: "खेल खोजें..."
+    },
+    br: {
+      play: "Jogar",
+      searchPlaceholder: "Buscar jogo..."
+    },
+    es: {
+      play: "Jugar",
+      searchPlaceholder: "Buscar juego..."
+    }
+  };
+
+  let currentLang = 'ru';
+
+  function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    // Обновляем кнопки
+    document.querySelectorAll('.play-button').forEach(el => {
+      el.textContent = t.play;
+    });
+
+    // Обновляем плейсхолдер поиска
+    document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+  }
+
+  function createStars() {
+    const stars = document.getElementById('stars');
+    const count = 320;
+
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      const size = Math.random() * 3 + 1;
+
+      star.style.left = `${x}px`;
+      star.style.top = `${y}px`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+
+      stars.appendChild(star);
+    }
+  }
+
+  function filterGames() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.game-card');
+    cards.forEach(card => {
+      const title = card.getAttribute('data-title').toLowerCase();
+      card.style.display = title.includes(input) ? 'flex' : 'none';
+    });
+  }
+
+  createStars();
+  changeLanguage(currentLang); // Инициализация языка
+</script>
+
+
+  <!-- 📌 Как добавить новую игру:
+    1. Добавь новый блок внутри .games-container:
+       <div class="game-card" data-title="НазваниеИгры">
+         <img src="games/имя_файла.jpg" alt="НазваниеИгры" />
+         <h3 class="game-title">НазваниеИгры</h3>
+         <a href="games/имя_страницы.html" class="play-button">Играть</a>
+       </div>
+
+    2. Добавь название игры в массив translations[язык].titles
+       Например: titles: ["Gates Of Olympus", "Новая Игра"]
+
+    3. Убедись, что изображения и HTML-страница игры находятся в нужной папке.
+  -->
+    
+</body>
+</html>
